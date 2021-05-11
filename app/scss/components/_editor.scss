@@ -1,0 +1,17 @@
+.editor{
+  display: inline-block;
+  padding:8px;
+  background-color: #b1b1b1;
+  @include typical_flex;
+  position: fixed;
+  bottom:0px;
+  right: -230px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all .2s ease-in-out 0s;
+
+  &__icon{
+    margin-right: 10px;
+    padding:2px;
+  }
+}

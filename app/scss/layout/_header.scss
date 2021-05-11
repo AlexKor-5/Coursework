@@ -1,0 +1,11 @@
+.header {
+  @include typical_flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  &__right{
+    a:not(:last-child){
+      margin-right: 20px;
+    }
+  }
+}

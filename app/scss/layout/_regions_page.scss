@@ -1,0 +1,50 @@
+.regions {
+  max-width: 1000px;
+  margin: 0px auto;
+  &__relative{
+    position: relative;
+  }
+
+  &__block {
+    padding: 25px;
+
+  }
+  &__block:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  &__item{
+    height:300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+
+    img{
+      display: block;
+      max-width: 250%;
+      height: 100%;
+    }
+  }
+  &__images{
+    margin-bottom: 20px;
+  }
+  &__download-form{
+    position: absolute;
+    bottom:0px;
+    left:0px;
+    z-index: 10;
+    margin-left: 15px;
+  }
+  &__wrapper{
+    @include typical_flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__navigation{
+    a{
+      margin-right: 20px;
+    }
+  }
+}

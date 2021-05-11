@@ -1,0 +1,54 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+:root{
+    --text-color:#808080;
+    --attention-color:rgb(0, 119, 255);
+    --down-blue: rgb(29, 81, 131);
+}
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+.bs{
+    border:1px solid salmon;
+}
+.bs-b{
+    border:1px solid blue;
+}
+.bs-g{
+    border:1px solid green;
+}
+.bs-y{
+    border: 3px solid yellow;
+}
+.bs-o{
+    border:1px solid orangered;
+}
+.bs-p{
+    border:2px solid slateblue;
+}
+.bs-bold{
+    border:2px solid black;
+}
+.back-color{
+    background-color:grey;
+}
+.container-padding{
+    padding:0px 20px;
+}
+.my-container{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.display-none{
+    display: none;
+}
+
