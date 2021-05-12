@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/style.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
 <header class="bg-success bg-gradient">
@@ -12,8 +12,8 @@
         <div class="header">
             <div class="header__left text-white"><h1>Туристичне бюро</h1></div>
             <div class="header__right">
-                <a href="../index.html" class="link-light">Країни</a>
-                <a href="templates/regions.html" class="link-light">Регіони</a>
+                <a href="index.html" class="link-light">Країни</a>
+                <a href="regions.html" class="link-light">Регіони</a>
                 <a href="#" class="link-light">Міста</a>
                 <a href="#" class="link-light">Містечка</a>
             </div>
@@ -25,7 +25,7 @@
     <div class="container my-container">
         <div class="regions">
             <div class="countries__title text-muted text-center">
-                <h1>Регіони вибраної вами країни</h1>
+                <h1>Містечка вибраного вами регіону</h1>
             </div>
             <div class="row gy-4">
                 <div class="col-12">
@@ -53,8 +53,8 @@
                                         <input type="file" name="image_upload"
                                                accept=".jpg, .jpeg, .png, .gif" data-edit="image">
                                     </form>
-                                    <a href="#" class="regions__item border border-success border-2">
-                                        <img src="../images/Tests_images/1280x720.png" alt="error">
+                                    <a href="#1" class="regions__item border border-success border-2" data-edit="link-block">
+                                        <img src="images/Tests_images/1280x720.png" alt="error">
                                         <input type="hidden" name="image_id" value="3765674353">
                                         <input type="hidden" name="region_id" value="376574353">
                                     </a>
@@ -63,11 +63,11 @@
                                 <div class="col-12 col-md-6 col-lg-4 regions__relative">
                                     <form method="post" enctype="multipart/form-data"
                                           class="regions__download-form display-none">
-                                            <input type="file" name="image_upload"
-                                                   accept=".jpg, .jpeg, .png, .gif" data-edit="image">
+                                        <input type="file" name="image_upload"
+                                               accept=".jpg, .jpeg, .png, .gif" data-edit="image">
                                     </form>
-                                    <a href="#" class="regions__item border border-success border-2">
-                                        <img src="../images/Tests_images/1280x720.png" alt="error">
+                                    <a href="#2" class="regions__item border border-success border-2" data-edit="link-block">
+                                        <img src="images/Tests_images/1280x720.png" alt="error">
                                         <input type="hidden" name="image_id" value="3765674353">
                                         <input type="hidden" name="region_id" value="376574353">
                                     </a>
@@ -76,8 +76,8 @@
                         </div>
                         <div class="regions__wrapper">
                             <div class="regions__navigation">
-                                <a href="#" class="link-success">Туристичні міста</a>
-                                <a href="#" class="link-success">Туристичні містечка</a>
+<!--                                <a href="#" class="link-success">Туристичні міста</a>-->
+<!--                                <a href="#" class="link-success">Туристичні містечка</a>-->
                             </div>
                             <div class="regions__time text-muted">
                                 <span><small>Опубліковано: 20:50 07.05.2021</small></span>
@@ -114,6 +114,6 @@
     </div>
 </footer>
 
-<script src="../js/main.min.js"></script>
+<script src="js/main.min.js"></script>
 </body>
 </html>
