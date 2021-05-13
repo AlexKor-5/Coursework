@@ -1,4 +1,4 @@
-const { src, dest, watch, parallel, series } = require('gulp');
+const {src, dest, watch, parallel, series} = require('gulp');
 const scss = require('gulp-sass');
 const concat = require('gulp-concat');
 const browserSync = require('browser-sync').create();
@@ -9,9 +9,8 @@ const del = require('del');
 
 function browsersync() {
     browserSync.init({
-        server: {
-            baseDir: "./app"
-        }
+        proxy: 'coursework', //  settings for PHP
+        notify: false
     });
 }
 
@@ -31,13 +30,13 @@ function cleanDist() {
 function images() {
     return src('app/images/**/*')
         .pipe(imagemin([
-            imagemin.gifsicle({ interlaced: true }),
-            imagemin.mozjpeg({ quality: 75, progressive: true }),
-            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.gifsicle({interlaced: true}),
+            imagemin.mozjpeg({quality: 75, progressive: true}),
+            imagemin.optipng({optimizationLevel: 5}),
             imagemin.svgo({
                 plugins: [
-                    { removeViewBox: true },
-                    { cleanupIDs: false }
+                    {removeViewBox: true},
+                    {cleanupIDs: false}
                 ]
             })
         ]))
@@ -64,7 +63,7 @@ function styles() {
         'app/scss/bootstrap_scss_files/bootstrap.scss',
         'app/scss/style.scss'
     ])
-        .pipe(scss({ outputStyle: 'expanded' }))//creating minimized file // outputStyle: 'compressed' allows css looks greate
+        .pipe(scss({outputStyle: 'expanded'}))//creating minimized file // outputStyle: 'compressed' allows css looks greate
         .pipe(concat('style.min.css'))            //renaming
         .pipe(autoprefixer({
             overrideBrowserslist: ['last 10 version'],
@@ -81,7 +80,7 @@ function build() {
         'app/fonts/**/*',
         'app/js/main.min.js',
         'app/*.html'
-    ], { base: 'app' })
+    ], {base: 'app'})
         .pipe(dest(`dist`))
 }
 
@@ -91,6 +90,7 @@ function watching() {
     watch(['app/js/**/*.js', '!app/js/main.min.js'], scripts);//watching for all js files except main.min.js
     watch(['app/*.html']).on('change', browserSync.reload);//refresh browser if html has change
     watch(['app/**/*.html']).on('change', browserSync.reload);//refresh browser if html has change
+    watch(['app/**/*.php']).on('change', browserSync.reload);
 }
 
 exports.styles = styles;
@@ -113,7 +113,6 @@ exports.cleanDist = cleanDist;
 
 // Available command "gulp build" to build project into "dist" folder
 exports.build = series(cleanDist, images, build);
-
 
 
 exports.default = parallel(styles, scripts, browsersync, watching);

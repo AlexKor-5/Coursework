@@ -1,3 +1,4 @@
+'use strict'
 const init = () => {
     const editor = document.getElementById('editor');
     const ed_start_bth = document.getElementById('editor_start');
@@ -6,7 +7,9 @@ const init = () => {
 
     let editor_switch = false;
     let truly = true;
-    let changed_data = [];
+    let changed_data_title = [];
+    let changed_data_desc = [];
+    let my_array = [];
 
 
     const names = document.querySelectorAll('[data-edit="name"]');
@@ -96,15 +99,41 @@ const init = () => {
         setter_true_false(descriptions, truly);
         download_buttons_life('dead', images);
         links_blocker('alive', links);
+        changed_data_title = [];
+        changed_data_desc = [];
         // console.log('turnOFF');
+    }
+
+    const get_object_data = (obj, array) => {
+
+
+        my_array.push(obj);
+        let current_array = array;
+        let current_object = array[array.length - 1];
+        if (array.length > 1) {
+            console.log(true);
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].id == current_object.id) {
+                    console.log(array);
+                    array.splice(i, 1);
+                    console.log(array);
+                }
+            }
+        }
+
+        // console.log(current_array.length);
+
+
+        // console.log(array);
     }
 
     const recognition = () => {
         let title, desc = null;
 
-        const define_change = (array) => {
+        const define_change = (array, array_taker) => {
             let previous_content = null;
             let new_content, res, id, dom_elem_value = null;
+
             array.forEach((item) => {
                 item.onfocus = (event) => {
                     let element = event.target;
@@ -116,19 +145,18 @@ const init = () => {
                     if (previous_content !== new_content) {
                         res = new_content;
                         dom_elem_value = element.nextElementSibling.value
-                        console.log('true ection');
-                        return {
+                        let obj = {
                             content: res,
                             id: dom_elem_value
                         };
+                        get_object_data(obj, array_taker);
                     }
                 }
             });
 
         }
-        console.log(define_change(names));
-        // console.log(define_change(names));
-
+        define_change(names, changed_data_title);
+        define_change(descriptions, changed_data_desc);
     }
 
 
@@ -138,11 +166,6 @@ const init = () => {
         ed_finish_btn.addEventListener('click', turnOFF_editor, false);
         recognition();
 
-        // images.forEach((item) => {
-        //     item.onchange = (event) => {
-        //         console.log(event.target);
-        //     }
-        // });
     };
     main();
 

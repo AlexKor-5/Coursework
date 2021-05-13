@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.min.css">
-</head>
-<body>
-<header class="bg-success bg-gradient">
-    <div class="container-padding">
-        <div class="header">
-            <div class="header__left text-white"><h1>Туристичне бюро</h1></div>
-            <div class="header__right">
-                <a href="index.html" class="link-light">Країни</a>
-                <a href="regions.html" class="link-light">Регіони</a>
-                <a href="#" class="link-light">Міста</a>
-                <a href="#" class="link-light">Містечка</a>
-            </div>
-        </div>
-    </div>
-</header>
+<?php require_once 'header.php'; ?>
 
 <main>
     <div class="container my-container">
@@ -94,7 +73,7 @@
 
                     <div class="regions__block border border-success border-2">
                         <div class="regions__title text-muted">
-                            <h2 contenteditable="false" data-edit="name">Північна Дакота</h2>
+                            <h2 contenteditable="false" data-edit="name">Каліфорнія</h2>
                             <input type="hidden" name="region_id" value="2222">
                         </div>
                         <div class="regions__description text-muted">
@@ -159,26 +138,4 @@
         </div>
     </div>
 </main>
-
-<footer class="bg-secondary bg-gradient">
-    <div class="container-padding">
-        <div class="footer text-white text-center">
-            <span>Copyright - 2021</span>
-
-            <div class="editor" id="editor">
-                <div class="editor__icon">
-                    Ред.
-                </div>
-                <div class="editor__wrapper">
-                    <button id="editor_start">Почати</button>
-                    <button id="editor_finish">Скасувати</button>
-                    <button id="editor_save">Зберегти</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script src="js/main.min.js"></script>
-</body>
-</html>
+<?php require_once 'footer.php'; ?>
