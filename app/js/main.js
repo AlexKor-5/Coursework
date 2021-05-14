@@ -105,26 +105,19 @@ const init = () => {
     }
 
     const get_object_data = (obj, array) => {
-
-
-        my_array.push(obj);
+        array.push(obj);
         let current_array = array;
         let current_object = array[array.length - 1];
+        // save identity in array
         if (array.length > 1) {
-            console.log(true);
-            for (let i = 0; i < array.length; i++) {
-                if (array[i].id == current_object.id) {
-                    console.log(array);
+            for (let i = 0; i < array.length - 1; i++) {
+
+                if (array[i].id === current_object.id) {
                     array.splice(i, 1);
-                    console.log(array);
                 }
             }
         }
-
-        // console.log(current_array.length);
-
-
-        // console.log(array);
+        console.log(array);
     }
 
     const recognition = () => {

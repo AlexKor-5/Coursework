@@ -3,12 +3,13 @@ include_once 'function.php';
 global $conn;
 
 try {
-    if (!isset($_REQUEST['image_id'])) {
+    if (!isset($_REQUEST['image_id']) && !isset($_REQUEST['table'])) {
         handle_error("Не вказане зображення для завантаження", "Не вказане зображення для завантаження");
     }
     $countries_id = $_REQUEST['image_id'];
+    $table = $_REQUEST['table'];
 
-    $select_query = sprintf("SELECT * FROM images WHERE countries_id = %d", $countries_id);
+    $select_query = sprintf("SELECT * FROM images WHERE $table = %d", $countries_id);
     $result = $conn->query($select_query);
     ($result) or handle_error("Трапився збій в запросі до бази даних", $conn->connect_error);
 

@@ -1,5 +1,4 @@
 <?php
-
 include_once 'function.php';
 global $conn;
 
@@ -7,8 +6,9 @@ $query = "SELECT * FROM countries";
 $res = $conn->query($query);
 ($res) or handle_error("Трапився збій при отриманні інформації про країни від бази даних", $conn->connect_error);
 //echo var_dump($res->num_rows);
+$table = 'countries_id';
 
-global $countries_id, $countries_name, $countries_upload_time;
+//global $countries_id, $countries_name, $countries_upload_time;
 ?>
 <?php require_once 'header.php'; ?>
 <main>
@@ -31,12 +31,12 @@ global $countries_id, $countries_name, $countries_upload_time;
                     <form method="post" enctype="multipart/form-data" class="countries__download-form display-none">
                         <input type="file" name="image_upload" accept=".jpg, .jpeg, .png, .gif" data-edit="image">
                     </form>
-                    <a href="#" class="countries__box border border-success border-4" data-edit="link-block">
-                        <img src="show_image.php?image_id=$countries_id" alt="error">
+                    <a href="regions.php?countries_id=$countries_id" class="countries__box border border-success border-4" data-edit="link-block">
+                        <img src="show_image.php?image_id=$countries_id&table=$table" alt="error">
                         <div class="countries__name text-white">
                             <h2 contenteditable="false" data-edit="name">$countries_name</h2>
-                            <input type="hidden" name="image_id" value="3435366">
-                            <input type="hidden" name="country_id" value="34353">
+                             <input type="hidden" name="country_id" value="$countries_id">
+                             <input type="hidden" name="image_id" value="3435366">
                         </div>
                         <div class="countries__upload-time text-white">
                             <p>
@@ -48,7 +48,11 @@ global $countries_id, $countries_name, $countries_upload_time;
 _END;
                     }
                 }
+//                echo print_r($_SERVER['PHP_SELF']);
+
+//                echo print_r($_SERVER['HTTP_HOST']);
                 ?>
+
             </div>
         </div>
     </div>

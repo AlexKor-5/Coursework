@@ -15,7 +15,7 @@
                 <a href="index.php" class="link-light">Країни</a>
                 <a href="regions.php" class="link-light">Регіони</a>
                 <a href="cities.php" class="link-light">Міста</a>
-                <a href="towns.php" class="link-light">Містечка</a>
+                <a href="load_country.php" class="link-light">load_country</a>
             </div>
         </div>
     </div>
