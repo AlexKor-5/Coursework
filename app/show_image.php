@@ -4,14 +4,16 @@ global $conn;
 
 try {
     if (!isset($_REQUEST['image_id']) && !isset($_REQUEST['table'])) {
-        handle_error("Не вказане зображення для завантаження", "Не вказане зображення для завантаження");
+        handle_error("Image is not defined", "Image is not defined");
     }
-    $countries_id = $_REQUEST['image_id'];
+    $image_id = $_REQUEST['image_id'];
     $table = $_REQUEST['table'];
 
-    $select_query = sprintf("SELECT * FROM images WHERE $table = %d", $countries_id);
+    $select_query = sprintf("SELECT * FROM images WHERE $table = %d", $image_id);
+//    $select_query =  sprintf("SELECT * FROM images WHERE images_id = %d", $image_id);
+
     $result = $conn->query($select_query);
-    ($result) or handle_error("Трапився збій в запросі до бази даних", $conn->connect_error);
+    ($result) or handle_error("Error has just happened", $conn->connect_error);
 
 
     global $mime_type, $file_size, $image_data;
@@ -23,7 +25,7 @@ try {
     } else {
         handle_error("возникла проблема с поиском вашей " .
             "информации на нашей системе.",
-            "Ошибка обнаружения Image in DataBase");
+            "Ошибка обнаружения Image in DataBase (show_image.php)");
     }
 
     header('Content-type: ' . $mime_type);
