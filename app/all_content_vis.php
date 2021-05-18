@@ -9,7 +9,6 @@ function gather_data($request_address = 'countries_id', $str_place_id = 'countri
         handle_error("$request_address is not defined", "$request_address is not defined");
     }
     $place_id = $_REQUEST[$request_address];
-
     $query = sprintf("SELECT * FROM " . "$set" . " WHERE " . "$str_place_id" . " = %d", $place_id);
     $res = $conn->query($query);
     ($res) or handle_error("error has just happened", $conn->connect_error);
@@ -35,7 +34,6 @@ function gather_data($request_address = 'countries_id', $str_place_id = 'countri
                 'upload_time' => "$upload_time",
                 'update_time' => "$update_time"
             );
-
             array_push($all_regions, $content_array);
         }
     }
