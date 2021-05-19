@@ -26,17 +26,26 @@ $table = 'countries_id';
                         $countries_name = $row['name'];
                         $countries_id = $row['countries_id'];
                         $countries_upload_time = $row['upload_time'];
+                        $sub_query = "SELECT images_id FROM images WHERE countries_id = " . $countries_id;
+                        $sub_res = $conn->query($sub_query);
+                        global $image_id;
+                        if ($sub_res->num_rows) {
+                            $sub_row = $sub_res->fetch_array(MYSQLI_ASSOC);
+                            $image_id = $sub_row['images_id'];
+                        }
+
                         echo <<<_END
                <div class="col-12 col-md-6 col-lg-4 col-xxl-3 countries__relative">
                     <form method="post" enctype="multipart/form-data" class="countries__download-form display-none">
                         <input type="file" name="image_upload" accept=".jpg, .jpeg, .png, .gif" data-edit="image">
+                        <input type="hidden" name="image_id" value="$image_id">
+                          <input type="hidden" name="country_id" value="$countries_id">
                     </form>
                     <a href="regions.php?countries_id=$countries_id" class="countries__box border border-success border-4" data-edit="link-block">
                         <img src="show_image.php?image_id=$countries_id&table=$table" alt="error">
+                    
                         <div class="countries__name text-white">
                             <h2 contenteditable="false" data-edit="name">$countries_name</h2>
-                             <input type="hidden" name="country_id" value="$countries_id">
-                             <input type="hidden" name="image_id" value="3435366">
                         </div>
                         <div class="countries__upload-time text-white">
                             <p>
@@ -48,9 +57,6 @@ $table = 'countries_id';
 _END;
                     }
                 }
-//                echo print_r($_SERVER['PHP_SELF']);
-
-//                echo print_r($_SERVER['HTTP_HOST']);
                 ?>
 
             </div>

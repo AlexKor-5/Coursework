@@ -99,14 +99,14 @@ function hidden_input($content, $setter)
                                   class="regions__download-form display-none">
                                 <input type="file" name="image_upload"
                                        accept=".jpg, .jpeg, .png, .gif" data-edit="image">
+                                <input type="hidden" name="image_id"
+                                       value="<?php echo $all_regions[$i]['images_id'][$y]; ?>">
+                                <input type="hidden" name="<?php echo $set . '_id'; ?>"
+                                       value="<?php echo $all_regions[$i]['regions_id']; ?>">
                             </form>
                             <a href="<?php echo $all_regions[$i]['images_src'][$y]; ?>"
                                class="regions__item border border-success border-2">
                                 <?php echo $all_regions[$i]['images_set'][$y]; ?>
-                                <input type="hidden" name="image_id"
-                                       value="<?php echo $all_regions[$i]['images_id'][$y]; ?>">
-                                <input type="hidden" name="region_id"
-                                       value="<?php echo $all_regions[$i]['regions_id']; ?>">
                             </a>
                         </div>
                     <?php }

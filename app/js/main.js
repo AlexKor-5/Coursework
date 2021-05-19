@@ -9,8 +9,7 @@ const init = () => {
     let truly = true;
     let changed_data_title = [];
     let changed_data_desc = [];
-    let my_array = [];
-
+    let changed_data_images = [];
 
     const names = document.querySelectorAll('[data-edit="name"]');
     const descriptions = document.querySelectorAll('[data-edit="description"]');
@@ -106,7 +105,6 @@ const init = () => {
 
     const get_object_data = (obj, array) => {
         array.push(obj);
-        let current_array = array;
         let current_object = array[array.length - 1];
         // save identity in array
         if (array.length > 1) {
@@ -117,37 +115,73 @@ const init = () => {
                 }
             }
         }
-        console.log(array);
+        return array;
     }
 
-    const recognition = () => {
-        let title, desc = null;
+    const recognition = async () => {
 
-        const define_change = (array, array_taker) => {
+        const define_change = async (array, array_taker) => {
             let previous_content = null;
-            let new_content, res, id, dom_elem_value = null;
+            let new_content, res, dom_elem_value, dom_elem_name = null;
+
+
+            const action_await = (data) => {
+                return new Promise((resolve, reject) => {
+                    resolve(data);
+                }).then((res) => {
+                    return res;
+                });
+            }
 
             array.forEach((item) => {
                 item.onfocus = (event) => {
                     let element = event.target;
                     previous_content = element.textContent;
                 }
-                item.onblur = (event) => {
+                item.onblur = async (event) => {
                     let element = event.target;
                     new_content = element.textContent;
                     if (previous_content !== new_content) {
                         res = new_content;
-                        dom_elem_value = element.nextElementSibling.value
+                        dom_elem_value = element.nextElementSibling.value;
+                        dom_elem_name = element.nextElementSibling.name;
                         let obj = {
                             content: res,
-                            id: dom_elem_value
+                            id: dom_elem_value,
+                            type_id: dom_elem_name
                         };
-                        get_object_data(obj, array_taker);
+                        console.log(await action_await(get_object_data(obj, array_taker)));
                     }
                 }
             });
+        }//end of define_change
 
+        const define_image_change = (images) => {
+            images.forEach((input) => {
+                input.onchange = () => {
+                    let file = input.files[0];
+                    let reader = new FileReader();
+                    reader.readAsArrayBuffer(file);
+                    reader.onload = () => {
+                        // console.log(reader.result);
+                        let blob = new Blob([reader.result], {type: file.type});
+                        let image_id = input.nextElementSibling.value;
+                        let location_id = input.nextElementSibling.nextElementSibling.value;
+                        let type_id = input.nextElementSibling.nextElementSibling.name;
+                        let object = {
+                            data_blob: blob,
+                            location_id: location_id,
+                            type_id: type_id,
+                            image_id: image_id
+                        }
+                        changed_data_images.push(object);
+                        console.log(changed_data_images);
+                        // console.log(input);
+                    }
+                }
+            })
         }
+        define_image_change(images);
         define_change(names, changed_data_title);
         define_change(descriptions, changed_data_desc);
     }

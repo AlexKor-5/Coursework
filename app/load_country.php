@@ -10,22 +10,35 @@ if (isset($_POST['name'])) {
 }
 
 global $countries_id;
-if (!$_FILES['error'] == 0) {
-//    $image = $_FILES['image'];
-//    $image_data = file_get_contents($image['tmp_name']);
-//
-//        $sub_query = "SELECT countries_id FROM countries WHERE name = '$name'";
-//        $sub_res = $conn->query($sub_query);
-//        ($sub_query) or handle_error('Помилка в запросі до бази 2', $conn->connect_error);
-//        if ($sub_res->num_rows) {
-//            $row = $sub_res->fetch_array(MYSQLI_ASSOC);
-//            $countries_id = $row['countries_id'];
-//            echo 'countries_id = ' . $countries_id . '<br>';
-//        }
+if ($_FILES['image']['size'] !== 0 && $_FILES['image']['error'] == 0) {
+    if ($name) {
+        $image = $_FILES['image'];
+        $image_data = file_get_contents($image['tmp_name']);
 
-
+        $sub_query = "SELECT countries_id FROM countries WHERE name = '$name'";
+        $sub_res = $conn->query($sub_query);
+        ($sub_query) or handle_error('Помилка в запросі до бази 2', $conn->connect_error);
+        if ($sub_res->num_rows) {
+            $row = $sub_res->fetch_array(MYSQLI_ASSOC);
+            $countries_id = $row['countries_id'];
+            $sub2_query = sprintf("INSERT INTO images(name, mime_type, file_size, data_blob, countries_id) "
+                . "VALUES ('%s', '%s', %d, '%b', %d)",
+                $image['name'],
+                $image['type'],
+                $image['size'],
+                $image_data,
+                $countries_id
+            );
+            $sub2_res = $conn->query($sub2_query);
+            ($sub2_res) or handle_error('Image is not in database!', $conn->connect_error);
+        }
+    }
 }
-
+//            $image_name = $image['name'];
+//            $image_type = $image['type'];
+//            $image_size = $image['size'];
+//            $sub2_query = "INSERT INTO images(name, mime_type, file_size, countries_id) " .
+//                "VALUES ('$image_name', '$image_type', $image_size, $countries_id)";
 //$query = "INSERT INTO countries VALUES(NULL, $name, NOW())";
 
 //echo $name;
