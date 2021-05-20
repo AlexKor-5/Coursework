@@ -1,4 +1,6 @@
 'use strict'
+import "./submain.js";
+
 const init = () => {
     const editor = document.getElementById('editor');
     const ed_start_bth = document.getElementById('editor_start');

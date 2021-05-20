@@ -21,66 +21,53 @@ if ($_FILES['image']['size'] !== 0 && $_FILES['image']['error'] == 0) {
         if ($sub_res->num_rows) {
             $row = $sub_res->fetch_array(MYSQLI_ASSOC);
             $countries_id = $row['countries_id'];
-            $sub2_query = sprintf("INSERT INTO images(name, mime_type, file_size, data_blob, countries_id) "
-                . "VALUES ('%s', '%s', %d, '%b', %d)",
-                $image['name'],
-                $image['type'],
-                $image['size'],
-                $image_data,
-                $countries_id
-            );
-            $sub2_res = $conn->query($sub2_query);
-            ($sub2_res) or handle_error('Image is not in database!', $conn->connect_error);
+
+            $stmt = $conn->prepare("INSERT INTO images(name, mime_type, file_size, data_blob, countries_id) " . "VALUES (?,?,?,?,?)");
+            $stmt->bind_param('ssisi', $image['name'], $image['type'], $image['size'], $image_data, $countries_id);
+            if (!$stmt->execute()) {
+                handle_error('INSERT image Error', 'INSERT image Error system_error');
+            }
         }
     }
 }
-//            $image_name = $image['name'];
-//            $image_type = $image['type'];
-//            $image_size = $image['size'];
-//            $sub2_query = "INSERT INTO images(name, mime_type, file_size, countries_id) " .
-//                "VALUES ('$image_name', '$image_type', $image_size, $countries_id)";
-//$query = "INSERT INTO countries VALUES(NULL, $name, NOW())";
-
-//echo $name;
-
 ?>
 
 <?php require_once 'header.php'; ?>
-    <main>
-        <div class="container my-container">
-            <div class="regions">
-                <div class="countries__title text-muted text-center">
-                    <h1>Сторінка завантаження країни</h1>
-                </div>
-                <div class="row gy-4">
-                    <div class="col-12">
+<main>
+    <div class="container my-container">
+        <div class="regions">
+            <div class="countries__title text-muted text-center">
+                <h1>Сторінка завантаження країни</h1>
+            </div>
+            <div class="row gy-4">
+                <div class="col-12">
 
-                        <div class="regions__block border border-success border-2">
-                            <form action="load_country.php" method="post" enctype="multipart/form-data"
-                                  class="row g-3 needs-validation" novalidate>
-                                <div class="col-md-4">
-                                    <label for="validationCustom01" class="form-label">Назва країни</label>
-                                    <input type="text" class="form-control" name="name" id="validationCustom01" value=""
-                                           required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
+                    <div class="regions__block border border-success border-2">
+                        <form action="load_country.php" method="post" enctype="multipart/form-data"
+                              class="row g-3 needs-validation" novalidate>
+                            <div class="col-md-4">
+                                <label for="validationCustom01" class="form-label">Назва країни</label>
+                                <input type="text" class="form-control" name="name" id="validationCustom01" value=""
+                                       required>
+                                <div class="valid-feedback">
+                                    Looks good!
                                 </div>
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Виберіть зображення</label>
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="15000000">
-                                    <input class="form-control" type="file" name="image" id="formFile">
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-success" type="submit">Зберегти</button>
-                                </div>
-                            </form>
-                        </div>
-
-
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Виберіть зображення</label>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="15000000">
+                                <input class="form-control" type="file" name="image" id="formFile">
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-success" type="submit">Зберегти</button>
+                            </div>
+                        </form>
                     </div>
+
+
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 <?php require_once 'footer.php'; ?>

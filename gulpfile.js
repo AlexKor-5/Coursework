@@ -47,11 +47,10 @@ function images() {
 function scripts() {
     return src([
         'node_modules/bootstrap/dist/js/bootstrap.js',
-        'app/js/main.js',
-        'app/js/submain.js'
+        'app/js/main.js'
     ])
         .pipe(concat('main.min.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(dest('app/js'))
         .pipe(browserSync.stream())
 }
