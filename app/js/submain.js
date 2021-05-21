@@ -17,9 +17,11 @@ const init_2 = () => {
                 }
                 if (radio.value === `cities` || radio.value === `towns`) {
                     if (regions_selector.classList.contains(`display-none`)) {
+
                         regions_selector.classList.remove(`display-none`);
                         regions_selector.setAttribute(`name`, `select_regions`);
                         countries_selector.removeAttribute(`name`);
+
                         if (!countries_selector.classList.contains(`display-none`)) {
                             countries_selector.classList.add(`display-none`);
                         }
@@ -29,9 +31,12 @@ const init_2 = () => {
                     if (!regions_selector.classList.contains(`display-none`)) {
                         regions_selector.classList.add(`display-none`);
                         regions_selector.removeAttribute(`name`);
+
                         if (countries_selector.classList.contains(`display-none`)) {
                             countries_selector.classList.remove(`display-none`);
                         }
+                        countries_selector.setAttribute(`name`, `select_countries`);
+
                     }
                 }
             }
