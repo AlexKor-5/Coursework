@@ -45,7 +45,6 @@ const init_2 = () => {
 
     const main = () => {
         action_radios(radios_array);
-        console.log(regions_selector);
     }
     main();
 }
