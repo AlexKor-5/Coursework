@@ -66,8 +66,7 @@ function gather_data($request_address = 'countries_id', $str_place_id = 'countri
 
 function hidden_input($content, $setter)
 {
-    return "<input type='hidden' name='" . $setter . "_id'
-                   value='" . $content . "'>";
+    return "<input type='hidden' name='" . $setter . "' value='" . $content . "'>";
 }
 
 ?>
@@ -101,8 +100,8 @@ function hidden_input($content, $setter)
                                        accept=".jpg, .jpeg, .png, .gif" data-edit="image">
                                 <input type="hidden" name="image_id"
                                        value="<?php echo $all_regions[$i]['images_id'][$y]; ?>">
-                                <input type="hidden" name="<?php echo $set . '_id'; ?>"
-                                       value="<?php echo $all_regions[$i]['regions_id']; ?>">
+                                <input type="hidden" name="<?php echo $set; ?>"
+                                       value="<?php echo $all_regions[$i][$set . '_id']; ?>">
                             </form>
                             <a href="<?php echo $all_regions[$i]['images_src'][$y]; ?>"
                                class="regions__item border border-success border-2">

@@ -39,13 +39,14 @@ $table = 'countries_id';
                     <form method="post" enctype="multipart/form-data" class="countries__download-form display-none">
                         <input type="file" name="image_upload" accept=".jpg, .jpeg, .png, .gif" data-edit="image">
                         <input type="hidden" name="image_id" value="$image_id">
-                          <input type="hidden" name="country_id" value="$countries_id">
+                          <input type="hidden" name="countries" value="$countries_id">
                     </form>
                     <a href="regions.php?countries_id=$countries_id" class="countries__box border border-success border-4" data-edit="link-block">
                         <img src="show_image.php?image_id=$countries_id&table=$table" alt="error">
                     
                         <div class="countries__name text-white">
                             <h2 contenteditable="false" data-edit="name">$countries_name</h2>
+                            <input type="hidden" name="countries" value="$countries_id">
                         </div>
                         <div class="countries__upload-time text-white">
                             <p>

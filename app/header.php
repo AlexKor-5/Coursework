@@ -13,7 +13,7 @@
             <div class="header__left text-white"><h1>Туристичне бюро</h1></div>
             <div class="header__right">
                 <a href="index.php" class="link-light">Країни</a>
-                <a href="regions.php" class="link-light">Регіони</a>
+                <a href="update_content.php" class="link-light">update_content</a>
                 <a href="cities.php" class="link-light">Міста</a>
                 <a href="load_country.php" class="link-light">load_country</a>
                 <a href="load_content.php" class="link-light">load_content</a>
