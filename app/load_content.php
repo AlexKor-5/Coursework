@@ -82,7 +82,7 @@ if ($truly) {
             handle_error('INSERT image Error', 'INSERT image Error system_error');
         }
     }
-    echo 'image-send: ' . $radio_btn_type . '_id  ' . 'location_id=' . $location_id . '  ' . 'real_loc = ' . $real_location_id . '<br>';
+//    echo 'image-send: ' . $radio_btn_type . '_id  ' . 'location_id=' . $location_id . '  ' . 'real_loc = ' . $real_location_id . '<br>';
 
 //    $image_data = file_get_contents($images['tmp_name']);
 }
@@ -117,8 +117,8 @@ $all_countries = gather_data_for_select();
 $all_regions = gather_data_for_select('regions');
 
 
-echo print_r($_POST) . "<br>";
-echo print_r($_FILES) . "<br>";
+//echo print_r($_POST) . "<br>";
+//echo print_r($_FILES) . "<br>";
 ?>
 <?php require_once 'header.php'; ?>
     <main>

@@ -41,24 +41,25 @@ function set_Image_content($data = [])
             count($data[$i]['data_blob']) !== 0) {
             $changed_image = $data[$i]['data_blob'];
 
-//            $query = "UPDATE images SET name = " . $data[$i]['file_name'] . ", mime_type = " . $data[$i]['file_type'] .
-//                ", file_size = " . $data[$i]['file_size'] . ", data_blob = '$changed_image', WHERE images_id = " . $data[$i]['id'];
-//            $result = $conn->query($query);
-//            ($result) or handle_error('Error in image updating', $conn->connect_error);
+            echo 'NEW data_blob = ' . var_dump($changed_image) . '<br>';
 
             $stmt = $conn->prepare("UPDATE images SET name = ?, mime_type = ?, file_size = ?, data_blob = ? " .
                 "WHERE images_id = ?");
             $stmt->bind_param('ssisi', $data[$i]['file_name'], $data[$i]['file_type'], $data[$i]['file_size'],
                 $changed_image, $data[$i]['id']);
 
-            if (!$stmt->execute()) {
-                handle_error('Error in image updating', $stmt->errno);
-            }
-
+//            if (!$stmt->execute()) {
+//                handle_error('Error in image updating', $stmt->errno);
+//            }
 
         }
     }
 }
+
+//            $query = "UPDATE images SET name = " . $data[$i]['file_name'] . ", mime_type = " . $data[$i]['file_type'] .
+//                ", file_size = " . $data[$i]['file_size'] . ", data_blob = '$changed_image', WHERE images_id = " . $data[$i]['id'];
+//            $result = $conn->query($query);
+//            ($result) or handle_error('Error in image updating', $conn->connect_error);
 
 //echo 'type_id = ' . $info_array[$i]['type_id'] . '<br>' .
 //    'id = ' . $info_array[$i]['id'] . '<br>' .

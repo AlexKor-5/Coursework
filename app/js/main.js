@@ -163,27 +163,24 @@ const init = () => {
             images.forEach((input) => {
                 input.onchange = () => {
                     let file = input.files[0];
-                    let reader = new FileReader();
-                    reader.readAsArrayBuffer(file);
-                    reader.onload = () => {
-                        // console.log(reader.result);
-                        let blob = new Blob([file], {type: file.type});
-                        console.log(file);
-                        let image_id = input.nextElementSibling.value;
-                        let location_id = input.nextElementSibling.nextElementSibling.value;
-                        let type_id = input.nextElementSibling.nextElementSibling.name;
-                        let object = {
-                            data_blob: `${blob}`,
-                            location_id: location_id,
-                            type_id: type_id,
-                            id: image_id,
-                            file_type: file.type,
-                            file_size: file.size,
-                            file_name: file.name
-                        }
-                        array_taker = get_object_data(object, array_taker);
-                        console.log(array_taker);
+                    // let reader = new FileReader();
+                    // let blob = new Blob([file], {type: file.type});
+                    console.log(file);
+                    let image_id = input.nextElementSibling.value;
+                    let location_id = input.nextElementSibling.nextElementSibling.value;
+                    let type_id = input.nextElementSibling.nextElementSibling.name;
+                    let object = {
+                        data_blob: file,
+                        location_id: location_id,
+                        type_id: type_id,
+                        id: image_id,
+                        file_type: file.type,
+                        file_size: file.size,
+                        file_name: file.name
                     }
+                    array_taker = get_object_data(object, array_taker);
+                    console.log(array_taker);
+
                 }
             })
         }
