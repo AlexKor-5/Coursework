@@ -13,9 +13,6 @@ if (count($data['descriptions']) !== 0) {
     set_Text_content($data['descriptions'], "description");
 
 }
-if (count($data['images']) !== 0) {
-    set_Image_content($data['images']);
-}
 
 function set_Text_content($info_array = [], $where = "name")
 {
@@ -31,40 +28,23 @@ function set_Text_content($info_array = [], $where = "name")
     }
 }
 
-function set_Image_content($data = [])
-{
-    global $conn;
-    for ($i = 0; $i < count($data); ++$i) {
-        if ($data[$i]['location_id'] !== '' or
-            $data[$i]['type_id'] !== '' or
-            $data[$i]['id'] !== '' or
-            count($data[$i]['data_blob']) !== 0) {
-            $changed_image = $data[$i]['data_blob'];
-
-            echo 'NEW data_blob = ' . var_dump($changed_image) . '<br>';
-
-            $stmt = $conn->prepare("UPDATE images SET name = ?, mime_type = ?, file_size = ?, data_blob = ? " .
-                "WHERE images_id = ?");
-            $stmt->bind_param('ssisi', $data[$i]['file_name'], $data[$i]['file_type'], $data[$i]['file_size'],
-                $changed_image, $data[$i]['id']);
-
-//            if (!$stmt->execute()) {
-//                handle_error('Error in image updating', $stmt->errno);
-//            }
-
-        }
+if ($_FILES['data_blob']['size'] !== 0 && $_FILES['data_blob']['error'] == 0) {
+    $image = $_FILES['data_blob'];
+    $image_data = file_get_contents($image['tmp_name']);
+    if (isset($_POST['id'])) {
+        $image_id = $_POST['id'];
+        set_Image_content($image, $image_data, $image_id);
     }
 }
 
-//            $query = "UPDATE images SET name = " . $data[$i]['file_name'] . ", mime_type = " . $data[$i]['file_type'] .
-//                ", file_size = " . $data[$i]['file_size'] . ", data_blob = '$changed_image', WHERE images_id = " . $data[$i]['id'];
-//            $result = $conn->query($query);
-//            ($result) or handle_error('Error in image updating', $conn->connect_error);
-
-//echo 'type_id = ' . $info_array[$i]['type_id'] . '<br>' .
-//    'id = ' . $info_array[$i]['id'] . '<br>' .
-//    'content = ' . $info_array[$i]['content'] . '<br>';
-
-echo print_r($data) . '<br>';
-echo count($data['names']) . '<br>';
-echo count($data['images']) . '<br>';
+function set_Image_content($data, $blob_data, $image_id)
+{
+    global $conn;
+    $stmt = $conn->prepare("UPDATE images SET name = ?, mime_type = ?, file_size = ?, data_blob = ? " .
+        "WHERE images_id = ?");
+    $stmt->bind_param('ssisi', $data['name'], $data['type'], $data['size'],
+        $blob_data, $image_id);
+    if (!$stmt->execute()) {
+        handle_error('Error in image updating', $stmt->errno);
+    }
+}

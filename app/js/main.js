@@ -77,11 +77,6 @@ const init = () => {
         });
     }
 
-    const action_link = (event) => {
-
-
-    }
-
     const turnON_editor = () => {
         if (names.length === 0 && descriptions.length === 0) return;
         if (names.length !== 0 || descriptions.length !== 0) {
@@ -91,7 +86,6 @@ const init = () => {
         }
         download_buttons_life('alive', images);
         links_blocker('dead', links);
-        // console.log('turnON');
     }
 
     const turnOFF_editor = () => {
@@ -102,7 +96,6 @@ const init = () => {
         links_blocker('alive', links);
         changed_data_title = [];
         changed_data_desc = [];
-        // console.log('turnOFF');
     }
 
     const get_object_data = (obj, array) => {
@@ -159,26 +152,36 @@ const init = () => {
             });
         }//end of define_change
 
+        const clear_garbage = (formData, array_owner) => {
+            array_owner.push(formData);
+            let current_object = array_owner[array_owner.length - 1];
+
+            // save identity in array
+            if (array_owner.length > 1) {
+                for (let i = 0; i < array_owner.length - 1; i++) {
+                    if (array_owner[i].get('id') === current_object.get('id')) {
+                        array_owner.splice(i, 1);
+                    }
+                }
+            }
+            return array_owner;
+
+        }
+
         const define_image_change = (images, array_taker) => {
             images.forEach((input) => {
                 input.onchange = () => {
                     let file = input.files[0];
-                    // let reader = new FileReader();
-                    // let blob = new Blob([file], {type: file.type});
-                    console.log(file);
                     let image_id = input.nextElementSibling.value;
                     let location_id = input.nextElementSibling.nextElementSibling.value;
                     let type_id = input.nextElementSibling.nextElementSibling.name;
-                    let object = {
-                        data_blob: file,
-                        location_id: location_id,
-                        type_id: type_id,
-                        id: image_id,
-                        file_type: file.type,
-                        file_size: file.size,
-                        file_name: file.name
-                    }
-                    array_taker = get_object_data(object, array_taker);
+                    let formData = new FormData();
+                    formData.append('data_blob', file, file.name);
+                    formData.append('location_id', location_id);
+                    formData.append('type_id', type_id);
+                    formData.append('id', image_id);
+
+                    array_taker = clear_garbage(formData, array_taker);
                     console.log(array_taker);
 
                 }
@@ -193,8 +196,7 @@ const init = () => {
         console.log('-----console--send--data---');
         let final_object = {
             names: changed_data_title,
-            descriptions: changed_data_desc,
-            images: changed_data_images
+            descriptions: changed_data_desc
         };
         let response = await fetch('update_content.php', {
             method: 'POST',
@@ -203,6 +205,14 @@ const init = () => {
             },
             body: JSON.stringify(final_object)
         });
+
+        for (let i = 0; i < changed_data_images.length; i++) {
+            let answer = await fetch('update_content.php', {
+                method: 'POST',
+                body: changed_data_images[i]
+            })
+        }
+        console.log(changed_data_images);
     }
 
 
