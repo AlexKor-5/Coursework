@@ -125,6 +125,11 @@ function hidden_input($content, $setter)
                 <?php if ($all_regions[$i]['upload_time'] !== '') { ?>
                     <span><small>Опубліковано: <?php echo $all_regions[$i]['upload_time']; ?></small></span>
                 <?php } ?>
+                <?php if ($all_regions[$i]['update_time'] !== '') { ?>
+                    <span>&nbsp;</span>
+                    <span><small
+                                data-edit="update_time"><?php echo 'ред: ' . $all_regions[$i]['update_time']; ?></small></span>
+                <?php } ?>
             </div>
         </div>
     </div>

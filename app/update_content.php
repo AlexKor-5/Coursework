@@ -23,14 +23,18 @@ function set_Text_content($info_array = [], $where = "name")
             $query = "UPDATE " . $info_array[$i]['type_id'] . " SET " . $where . " = " . "'$changed_content'" .
                 " WHERE " . $info_array[$i]['type_id'] . "_id = " . $info_array[$i]['id'];
             $result = $conn->query($query);
-            ($result) or handle_error('Error in data updating', $conn->connect_error);
+            ($result) or handle_error('Error in data updating text', $conn->connect_error);
         }
     }
 }
 
 if ($_FILES['data_blob']['size'] !== 0 && $_FILES['data_blob']['error'] == 0) {
     $image = $_FILES['data_blob'];
-    $image_data = file_get_contents($image['tmp_name']);
+    global $image_data;
+    if (!empty($image['tmp_name'])) {
+        $image_data = file_get_contents($image['tmp_name']);
+    }
+
     if (isset($_POST['id'])) {
         $image_id = $_POST['id'];
         set_Image_content($image, $image_data, $image_id);

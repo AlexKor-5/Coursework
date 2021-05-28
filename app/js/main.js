@@ -211,6 +211,7 @@ const init = () => {
                 method: 'POST',
                 body: changed_data_images[i]
             })
+            // console.log('one time');
         }
         console.log(changed_data_images);
     }
