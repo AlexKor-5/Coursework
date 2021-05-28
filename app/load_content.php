@@ -70,6 +70,9 @@ if ($truly) {
     $images_size = [];
     for ($i = 0; $i < $end_value; ++$i) {
         $images_data[$i] = file_get_contents($images['tmp_name'][$i]);
+        echo print_r($images) . '<br>';
+        echo 'mime_type = ' . '<br>';
+        echo mime_content_type($images['tmp_name'][$i]) . '<br>';
         $images_name[$i] = $images['name'][$i];
         $images_mime[$i] = $images['type'][$i];
         $images_size[$i] = $images['size'][$i];
@@ -78,9 +81,10 @@ if ($truly) {
     for ($i = 0; $i < $end_value; ++$i) {
         $stmt = $conn->prepare("INSERT INTO images(name, mime_type, file_size, data_blob, " . $radio_btn_type . "_id) " . "VALUES (?,?,?,?,?)");
         $stmt->bind_param('ssisi', $images_name[$i], $images_mime[$i], $images_size[$i], $images_data[$i], $real_location_id);
-        if (!$stmt->execute()) {
-            handle_error('INSERT image Error', 'INSERT image Error system_error');
-        }
+//        if (!$stmt->execute()) {
+//            handle_error('INSERT image Error', 'INSERT image Error system_error');
+//        }
+        echo "type $i = " . $images_mime[$i];
     }
 //    echo 'image-send: ' . $radio_btn_type . '_id  ' . 'location_id=' . $location_id . '  ' . 'real_loc = ' . $real_location_id . '<br>';
 
