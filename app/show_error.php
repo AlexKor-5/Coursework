@@ -4,8 +4,10 @@ global $error_message, $system_error_message;
 if (isset($_REQUEST['error_message'])) {
     $error_message = $_REQUEST['error_message'];
 }
-if (isset($_REQUEST['system_error_message'])) {
+if (!isset($_REQUEST['system_error_message'])) {
     $system_error_message = $_REQUEST['system_error_message'];
+} else {
+    $system_error_message = "Сообщения о системных ошибках отсутствуют.";
 }
 
 

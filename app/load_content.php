@@ -18,15 +18,25 @@ if (isset($_POST['name']) &&
             $location_id = $_POST['select_' . $set];
             if ($radio_btn == $sub_set) {
                 $radio_btn_type = $radio_btn;
-                $query = "INSERT INTO " . $radio_btn . "(name, description, " . $set . "_id, upload_time) "
-                    . "VALUES('$name','$description','$location_id',NOW())";
-                $result = $conn->query($query);
-                ($result) or handle_error('Error in inserting data in load_content.php', $conn->connect_error);
+//                $query = "INSERT INTO " . $radio_btn . "(name, description, " . $set . "_id, upload_time) "
+//                    . "VALUES('$name','$description','$location_id',NOW())";
+
+                $stmt = $conn->prepare("INSERT INTO " . $radio_btn . "(name, description, " . $set . "_id, upload_time) "
+                    . "VALUES(?,?,?,NOW())");
+                $stmt->bind_param('ssi', $name, $description, $location_id);
+                if (!$stmt->execute()) {
+                    handle_error('Error in inserting data in load_content.php', $stmt->error);
+                }
+//
+//                $query_2 = "INSERT INTO regions(name, descriptions, countries_id, upload_time) " .
+//                    "VALUES('$name','$description','$location_id',NOW())";
+//                $result = $conn->query($query);
+//                ($result) or handle_error('Error in inserting data in load_content.php', "$conn->connect_error");
 
                 if ($name) {
                     $sub_query = "SELECT " . "$sub_set" . "_id FROM " . "$sub_set" . " WHERE name = '$name'";
                     $sub_result = $conn->query($sub_query);
-                    ($sub_result) or handle_error('Error in select id in load_content.php', $conn->connect_error);
+                    ($sub_result) or handle_error('Error in select id in load_content.php sub', $conn->connect_error);
                     if ($sub_result->num_rows) {
                         $row = $sub_result->fetch_array(MYSQLI_ASSOC);
                         $real_location_id = $row[$sub_set . '_id']; // return $real_location_id
@@ -70,9 +80,6 @@ if ($truly) {
     $images_size = [];
     for ($i = 0; $i < $end_value; ++$i) {
         $images_data[$i] = file_get_contents($images['tmp_name'][$i]);
-        echo print_r($images) . '<br>';
-        echo 'mime_type = ' . '<br>';
-        echo mime_content_type($images['tmp_name'][$i]) . '<br>';
         $images_name[$i] = $images['name'][$i];
         $images_mime[$i] = $images['type'][$i];
         $images_size[$i] = $images['size'][$i];
@@ -81,10 +88,9 @@ if ($truly) {
     for ($i = 0; $i < $end_value; ++$i) {
         $stmt = $conn->prepare("INSERT INTO images(name, mime_type, file_size, data_blob, " . $radio_btn_type . "_id) " . "VALUES (?,?,?,?,?)");
         $stmt->bind_param('ssisi', $images_name[$i], $images_mime[$i], $images_size[$i], $images_data[$i], $real_location_id);
-//        if (!$stmt->execute()) {
-//            handle_error('INSERT image Error', 'INSERT image Error system_error');
-//        }
-        echo "type $i = " . $images_mime[$i];
+        if (!$stmt->execute()) {
+            handle_error('INSERT image Error', 'INSERT image Error system_error');
+        }
     }
 //    echo 'image-send: ' . $radio_btn_type . '_id  ' . 'location_id=' . $location_id . '  ' . 'real_loc = ' . $real_location_id . '<br>';
 
@@ -121,8 +127,8 @@ $all_countries = gather_data_for_select();
 $all_regions = gather_data_for_select('regions');
 
 
-//echo print_r($_POST) . "<br>";
-//echo print_r($_FILES) . "<br>";
+// echo print_r($_POST) . "<br>";
+// echo print_r($_FILES) . "<br>";
 ?>
 <?php require_once 'header.php'; ?>
     <main>

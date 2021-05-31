@@ -20,10 +20,12 @@ function set_Text_content($info_array = [], $where = "name")
     for ($i = 0; $i < count($info_array); ++$i) {
         if ($info_array[$i]['id'] !== '' or $info_array[$i]['type_id'] !== '') {
             $changed_content = $info_array[$i]['content'];
-            $query = "UPDATE " . $info_array[$i]['type_id'] . " SET " . $where . " = " . "'$changed_content'" .
-                " WHERE " . $info_array[$i]['type_id'] . "_id = " . $info_array[$i]['id'];
-            $result = $conn->query($query);
-            ($result) or handle_error('Error in data updating text', $conn->connect_error);
+            $stmt = $conn->prepare("UPDATE " . $info_array[$i]['type_id'] . " SET " . $where . "= ? WHERE " .
+                $info_array[$i]['type_id'] . "_id = ?");
+            $stmt->bind_param('si', $changed_content, $info_array[$i]['id']);
+            if (!$stmt->execute()) {
+                handle_error('Error in inserting data in load_content.php', $stmt->error);
+            }
         }
     }
 }
